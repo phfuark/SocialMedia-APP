@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import MyUser
 
-class MyUserSerializer(serializers.ModelSerializer):
+class MyUserProfileSerializer(serializers.ModelSerializer):
 
     follower_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
