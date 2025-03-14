@@ -1,12 +1,14 @@
-     Layout = ({ children }) => {
+import { Box, VStack } from '@chakra-ui/react'
+
+import NavBar from './NavBar';
+
+export default function Layout( { children } ){
     return (
-        <div className="w-screen min-h-screen bg-gray-100 flex flex-col items-center">
-            <Navbar />
-            <div className="w-full">
+        <VStack w='100vw' minH='100vh' >
+            <NavBar/>
+            <Box w='100%'>
                 {children}
-            </div>
-        </div>
+            </Box>
+        </VStack>
     );
 };
-
-export default Layout;
