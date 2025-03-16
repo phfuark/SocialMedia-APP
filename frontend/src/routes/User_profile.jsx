@@ -1,15 +1,33 @@
 import { Box, Button, Flex, Heading, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { get_user_profile_data } from "../api/endpoint";
+import { SEVER_URL } from "../constants/constants";
 
 
 const UserDatails = ({username}) => {
 
+  const [loading, setLoading] = useState(true);
+  const [bio, setBio] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [followerCount, setFollowerCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState(0);
+
   useEffect(() =>{
 
     const fetchData = async () =>{
-      const data = await get_user_profile_data(username);
-      console.log(data)
+      try{
+        const data = await get_user_profile_data(username);
+        // console.log(data)
+        setBio(data.bio)
+        setProfileImage(data.profile_image)
+        setFollowerCount(data.follower_count)
+        setFollowingCount(data.following_count)
+      }catch(error){
+        console.log('Can not get data:' + error)
+      }finally{
+        setLoading(false)
+      }
+      
     }
 
     fetchData()
@@ -20,23 +38,23 @@ const UserDatails = ({username}) => {
       <Heading>@{username}</Heading>
       <HStack gap={'20px'}>
         <Box boxSize={'150px'} border={'2px solid'} borderColor={'gray.700'} bg={'white'} borderRadius={'full'} overflow={'hidden'}>
-          <Image boxSize={'100%'} objectFit={'cover'}/>
+          <Image src={loading ? '-':`${SEVER_URL}${profileImage}`} boxSize={'100%'} objectFit={'cover'}/>
         </Box>
         <VStack gap={'20px'}>
           <HStack gap={'20px'} fontSize={'18px'}>
             <VStack>
               <Text>Followers</Text>
-              <Text>0</Text>
+              <Text>{loading ? '-':followerCount}</Text>
             </VStack>
             <VStack>
               <Text>Follwing</Text>
-              <Text>0</Text>
+              <Text>{loading ? '-':followingCount}</Text>
             </VStack>
           </HStack>
           <Button w={'100%'}>Edit Profile</Button>
         </VStack>
       </HStack>
-      <Text>Hi, it's ph</Text>
+      <Text>{loading ? '-':bio}</Text>
     </VStack>
   );
 }

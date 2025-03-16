@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { SEVER_URL } from '../constants/constants';
 
-const BASE_URL = 'http://127.0.0.1:8000/api/';
+const BASE_URL = SEVER_URL;
 
 const api = axios.create({
     baseURL: BASE_URL,
