@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'base',
+    'rest_framework_simplejwt',
 
 ]
 
@@ -154,3 +155,13 @@ CORS_ALLOW_METHODS = (
     "POST",
     "PUT",
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'base.authenticate.CookiesAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    "USER_ID_FIELD": "username",
+}
